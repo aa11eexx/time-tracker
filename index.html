@@ -196,50 +196,6 @@
   /* ── Price in history ── */
   .proj-price { font-size: 11px; color: var(--yellow); flex-shrink: 0; margin-right: 4px; }
   .entry-price { font-size: 11px; color: var(--yellow); }
-
-  /* ── Cenník kalkulačka ── */
-  .cennik-toggle {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
-  }
-  .cennik-toggle-label { font-size: 10px; letter-spacing: 2px; color: var(--dim); }
-  .cennik-toggle-btn {
-    font-size: 10px; color: var(--blue); background: none; border: 1px solid var(--border);
-    border-radius: 8px; padding: 4px 10px; cursor: pointer; font-family: inherit;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .cennik-box {
-    display: none; margin: 8px 20px 0;
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 14px;
-    padding: 16px;
-  }
-  .cennik-box.open { display: block; }
-  .cennik-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
-  .cennik-row:last-child { margin-bottom: 0; }
-  .cennik-label { font-size: 10px; color: var(--dim); letter-spacing: 1px; }
-  .cennik-select {
-    background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
-    color: var(--text); font-family: inherit; font-size: 12px; padding: 8px 10px;
-    outline: none; width: 100%; transition: border-color .2s;
-  }
-  .cennik-select:focus { border-color: var(--blue); }
-  .cennik-checks { display: flex; flex-direction: column; gap: 8px; }
-  .cennik-chk { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--sub); cursor: pointer; }
-  .cennik-chk input { accent-color: var(--blue); width: 15px; height: 15px; cursor: pointer; }
-  .cennik-result {
-    margin-top: 14px; padding: 12px 14px;
-    background: rgba(64,196,255,.07); border: 1px solid rgba(64,196,255,.2);
-    border-radius: 10px; display: flex; align-items: center; justify-content: space-between;
-  }
-  .cennik-result-label { font-size: 10px; color: var(--sub); letter-spacing: 1px; }
-  .cennik-result-val { font-size: 20px; font-weight: 700; color: var(--yellow); }
-  .cennik-use-btn {
-    margin-top: 10px; width: 100%; background: var(--blue); color: #0a0a0f;
-    border: none; border-radius: 8px; font-family: inherit; font-size: 11px;
-    font-weight: 700; letter-spacing: 1px; padding: 9px; cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .cennik-note-small { font-size: 10px; color: var(--dim); margin-top: 8px; text-align: center; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -247,6 +203,7 @@
 <div class="sync-bar" id="syncBar">
   <span class="sync-dot"></span>
   <span id="syncText">načítavam...</span>
+  <a href="https://docs.google.com/spreadsheets/d/1UOg5vnogX0NE2Xkqood74rMuN7WnTaawozytf-D6B40/edit?gid=1333899088#gid=1333899088" target="_blank" style="margin-left:10px;font-size:10px;color:var(--dim);text-decoration:none;border:1px solid var(--border);border-radius:6px;padding:2px 8px;white-space:nowrap;">📊 Sheets</a>
 </div>
 
 <div class="header">
@@ -262,76 +219,6 @@
   <span class="rate-label">HODINOVÁ SADZBA</span>
   <input class="rate-input" id="rateInput" type="number" min="0" step="0.5" placeholder="0">
   <span class="rate-currency">€ / hod</span>
-</div>
-
-<!-- ── Cenník kalkulačka ── -->
-<div class="cennik-toggle">
-  <span class="cennik-toggle-label">KALKULAČKA CENY PROJEKTU</span>
-  <button class="cennik-toggle-btn" onclick="toggleCennik()">▼ zobraziť</button>
-</div>
-<div class="cennik-box" id="cennikBox">
-
-  <div class="cennik-row">
-    <span class="cennik-label">TYP SLUŽBY</span>
-    <select class="cennik-select" id="cSvc" onchange="calcCennik()">
-      <option value="interior">Vizualizácia interiéru</option>
-      <option value="exterior">Vizualizácia exteriéru</option>
-      <option value="both">Interiér + exteriér (zľava 30%)</option>
-      <option value="gd">Grafický dizajn</option>
-    </select>
-  </div>
-
-  <div class="cennik-row" id="cRowRooms">
-    <span class="cennik-label">POČET IZIEB</span>
-    <select class="cennik-select" id="cRooms" onchange="calcCennik()">
-      <option value="0">1 izba (+0 €)</option>
-      <option value="40">2 izby (+40 €)</option>
-      <option value="80">3–4 izby (+80 €)</option>
-      <option value="140">5+ izieb (+140 €)</option>
-    </select>
-  </div>
-
-  <div class="cennik-row" id="cRowArea" style="display:none">
-    <span class="cennik-label">PLOCHA (m²)</span>
-    <select class="cennik-select" id="cArea" onchange="calcCennik()">
-      <option value="0">do 300 m² (+0 €)</option>
-      <option value="50">do 500 m² (+50 €)</option>
-      <option value="80">do 1000 m² (+80 €)</option>
-    </select>
-  </div>
-
-  <div class="cennik-row" id="cRowInputs">
-    <span class="cennik-label">PODKLADY</span>
-    <select class="cennik-select" id="cInputs" onchange="calcCennik()">
-      <option value="40">Mám len pôdorys (+40 €)</option>
-      <option value="0">Mám 3D model (+0 €)</option>
-    </select>
-  </div>
-
-  <div class="cennik-row" id="cRowGd" style="display:none">
-    <span class="cennik-label">TYP GRAFIKY</span>
-    <select class="cennik-select" id="cGdtype" onchange="calcCennik()">
-      <option value="logo">Logo</option>
-      <option value="poster">Reklamný plagát / banner</option>
-      <option value="identity">Kompletná vizuálna identita</option>
-    </select>
-  </div>
-
-  <div class="cennik-row">
-    <span class="cennik-label">DOPLNKY</span>
-    <div class="cennik-checks">
-      <label class="cennik-chk"><input type="checkbox" id="cEvening" onchange="calcCennik()"><span>Večerný variant (+30 €)</span></label>
-      <label class="cennik-chk"><input type="checkbox" id="cUrgent" onchange="calcCennik()"><span>Expresné dodanie do 5 dní (+20%)</span></label>
-      <label class="cennik-chk" id="cRowAnim"><input type="checkbox" id="cAnim" onchange="calcCennik()"><span>Animácia (1 min / 50 €)</span></label>
-    </div>
-  </div>
-
-  <div class="cennik-result">
-    <span class="cennik-result-label">ORIENTAČNÁ CENA</span>
-    <span class="cennik-result-val" id="cennikTotal">— €</span>
-  </div>
-  <button class="cennik-use-btn" onclick="useCennikRate()">↑ Použiť hodinovku 15 €/hod pre práce navyše</button>
-  <p class="cennik-note-small">Výsledok je orientačný. Práce nad rámec zadania: 15 €/hod.<br>Pri kombinácii interiér + exteriér zľava 30%.</p>
 </div>
 
 <div class="sep"></div>
@@ -749,65 +636,6 @@ function renderHistory() {
   });
   document.getElementById('grandTotal').textContent = `Celkom: ${fmsDur(grand)}`;
 }
-
-// ── Cenník kalkulačka ─────────────────────────────────────────────────────────
-const GD_PRICES = { logo: 80, poster: 60, identity: 280 };
-const INTERIOR_BASE = 120;
-const EXTERIOR_BASE = 150;
-
-function toggleCennik() {
-  const box = document.getElementById('cennikBox');
-  const btn = document.querySelector('.cennik-toggle-btn');
-  const open = box.classList.toggle('open');
-  btn.textContent = open ? '▲ skryť' : '▼ zobraziť';
-  if (open) calcCennik();
-}
-
-function calcCennik() {
-  const svc     = document.getElementById('cSvc').value;
-  const rooms   = parseInt(document.getElementById('cRooms').value) || 0;
-  const area    = parseInt(document.getElementById('cArea').value)  || 0;
-  const inputs  = parseInt(document.getElementById('cInputs').value) || 0;
-  const gdtype  = document.getElementById('cGdtype').value;
-  const evening = document.getElementById('cEvening').checked;
-  const urgent  = document.getElementById('cUrgent').checked;
-  const anim    = document.getElementById('cAnim').checked;
-
-  // Zobraz/skry polia podľa typu
-  document.getElementById('cRowRooms').style.display  = (svc === 'interior' || svc === 'both') ? '' : 'none';
-  document.getElementById('cRowArea').style.display   = (svc === 'exterior' || svc === 'both') ? '' : 'none';
-  document.getElementById('cRowInputs').style.display = svc !== 'gd' ? '' : 'none';
-  document.getElementById('cRowGd').style.display     = svc === 'gd' ? '' : 'none';
-  document.getElementById('cRowAnim').style.display   = svc !== 'gd' ? '' : 'none';
-
-  let base = 0;
-  if (svc === 'interior') { base = INTERIOR_BASE + rooms + inputs; }
-  else if (svc === 'exterior') { base = EXTERIOR_BASE + area + inputs; }
-  else if (svc === 'both') {
-    base = (INTERIOR_BASE + rooms + EXTERIOR_BASE + area + inputs);
-    base = Math.round(base * 0.7); // zľava 30%
-  }
-  else if (svc === 'gd') { base = GD_PRICES[gdtype] || 80; }
-
-  if (evening) base += 30;
-  if (anim)    base += 50;
-  if (urgent)  base = Math.round(base * 1.2);
-
-  document.getElementById('cennikTotal').textContent = base + ' €';
-}
-
-function useCennikRate() {
-  document.getElementById('rateInput').value = 15;
-  // Ulož do aktívneho projektu ak je načítaný
-  if (activeProject) {
-    const proj = projects.find(p => p.id === activeProject.id);
-    if (proj) { proj.rate_per_hour = 15; localSave(projects); renderHistory(); }
-  }
-  toggleCennik();
-}
-
-// Inicializuj kalkulačku
-calcCennik();
 
 init();
 </script>
