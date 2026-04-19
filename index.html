@@ -19,187 +19,183 @@
     --bg3:    #1a1a28;
     --border: #252535;
     --green:  #00e676;
-    --green2: #00b85a;
     --yellow: #ffd740;
     --red:    #ff4d6d;
+    --blue:   #40c4ff;
     --text:   #e8e8f0;
     --dim:    #55556a;
     --sub:    #8888a8;
   }
   html, body {
-    height: 100%;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    overflow-x: hidden;
+    height: 100%; background: var(--bg); color: var(--text);
+    font-family: 'JetBrains Mono', monospace; overflow-x: hidden;
   }
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  body { display: flex; flex-direction: column; min-height: 100dvh; padding-bottom: env(safe-area-inset-bottom); }
 
   /* ── Sync bar ── */
-  .sync-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    padding: 6px 20px;
-    font-size: 10px;
-    letter-spacing: 1px;
-    color: var(--dim);
-    min-height: 28px;
-  }
-  .sync-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--dim);
-    flex-shrink: 0;
-  }
-  .sync-bar.syncing  { color: var(--yellow); }
-  .sync-bar.syncing  .sync-dot { background: var(--yellow); animation: blink 0.8s step-end infinite; }
-  .sync-bar.synced   { color: var(--green); }
-  .sync-bar.synced   .sync-dot { background: var(--green); }
-  .sync-bar.error    { color: var(--red); }
-  .sync-bar.error    .sync-dot { background: var(--red); }
+  .sync-bar { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 6px 20px; font-size: 10px; letter-spacing: 1px; color: var(--dim); min-height: 28px; }
+  .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); flex-shrink: 0; }
+  .sync-bar.syncing { color: var(--yellow); }
+  .sync-bar.syncing .sync-dot { background: var(--yellow); animation: blink 0.8s step-end infinite; }
+  .sync-bar.synced  { color: var(--green); }
+  .sync-bar.synced  .sync-dot { background: var(--green); }
+  .sync-bar.error   { color: var(--red); }
+  .sync-bar.error   .sync-dot { background: var(--red); }
 
   /* ── Header ── */
-  .header { padding: 6px 20px 6px; text-align: center; }
+  .header { padding: 4px 20px 4px; text-align: center; }
   .header-label { font-size: 10px; letter-spacing: 4px; color: var(--green); opacity: .7; }
 
   /* ── Name ── */
   .name-wrap { padding: 0 20px 4px; }
   .name-input {
-    width: 100%; background: var(--bg2);
-    border: 1px solid var(--border); border-radius: 12px;
-    color: var(--text); font-family: inherit;
-    font-size: 20px; font-weight: 700;
-    text-align: center; padding: 12px 16px;
-    outline: none; transition: border-color .2s;
+    width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    color: var(--text); font-family: inherit; font-size: 20px; font-weight: 700;
+    text-align: center; padding: 10px 16px; outline: none; transition: border-color .2s;
   }
   .name-input:focus { border-color: var(--green); }
   .name-hint { text-align: center; font-size: 10px; color: var(--dim); margin-top: 4px; }
 
-  .sep { height: 1px; background: var(--border); margin: 10px 20px; }
+  .sep { height: 1px; background: var(--border); margin: 8px 20px; }
+
+  /* ── Program tags ── */
+  .tags-section { padding: 0 20px 6px; }
+  .tags-label { font-size: 10px; letter-spacing: 2px; color: var(--dim); margin-bottom: 8px; }
+  .tags-wrap { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+  .tag {
+    padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    font-family: inherit; cursor: pointer; border: 1px solid var(--border);
+    background: var(--bg2); color: var(--sub); transition: all .15s;
+    -webkit-tap-highlight-color: transparent; white-space: nowrap;
+  }
+  .tag:active { transform: scale(.94); }
+  .tag.active { background: var(--blue); color: #0a0a0f; border-color: var(--blue); }
+  .tag-add {
+    padding: 6px 10px; border-radius: 20px; font-size: 13px;
+    background: none; border: 1px dashed var(--border); color: var(--dim);
+    cursor: pointer; font-family: inherit; transition: all .15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tag-add:active { transform: scale(.94); }
+  .tag-add:hover { border-color: var(--sub); color: var(--sub); }
+
+  /* ── Add tag input ── */
+  .tag-input-wrap { display: none; padding: 6px 20px 0; gap: 8px; align-items: center; }
+  .tag-input-wrap.visible { display: flex; }
+  .tag-input {
+    flex: 1; background: var(--bg2); border: 1px solid var(--green); border-radius: 8px;
+    color: var(--text); font-family: inherit; font-size: 12px; padding: 7px 10px; outline: none;
+  }
+  .tag-input-confirm {
+    background: var(--green); color: #0a0a0f; border: none; border-radius: 8px;
+    font-family: inherit; font-size: 11px; font-weight: 700; padding: 7px 12px; cursor: pointer;
+  }
+  .tag-input-cancel {
+    background: var(--bg3); color: var(--sub); border: 1px solid var(--border); border-radius: 8px;
+    font-family: inherit; font-size: 11px; padding: 7px 10px; cursor: pointer;
+  }
 
   /* ── Resume banner ── */
-  .resume-banner {
-    min-height: 20px; text-align: center;
-    font-size: 11px; color: var(--yellow);
-    padding: 0 20px 4px; line-height: 1.4;
-  }
+  .resume-banner { min-height: 18px; text-align: center; font-size: 11px; color: var(--yellow); padding: 0 20px 2px; line-height: 1.4; }
 
   /* ── Timer ── */
   .timer-box {
-    margin: 0 20px 8px;
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 16px; padding: 20px 16px 16px;
-    text-align: center; transition: border-color .4s;
+    margin: 0 20px 6px; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 16px 16px 14px; text-align: center; transition: border-color .4s;
   }
   .timer-box.running { border-color: var(--green); }
   .timer-box.loaded  { border-color: var(--yellow); }
   .timer-display {
-    font-size: clamp(40px, 13vw, 60px);
-    font-weight: 300; letter-spacing: 2px;
-    color: var(--dim); transition: color .3s;
-    font-variant-numeric: tabular-nums; line-height: 1;
+    font-size: clamp(38px, 12vw, 56px); font-weight: 300; letter-spacing: 2px;
+    color: var(--dim); transition: color .3s; font-variant-numeric: tabular-nums; line-height: 1;
   }
   .timer-display.running { color: var(--green); }
   .timer-display.loaded  { color: var(--yellow); }
-  .status {
-    font-size: 10px; letter-spacing: 3px; color: var(--dim);
-    margin-top: 8px; display: flex; align-items: center;
-    justify-content: center; gap: 7px; transition: color .3s;
-  }
+  .status { font-size: 10px; letter-spacing: 3px; color: var(--dim); margin-top: 7px; display: flex; align-items: center; justify-content: center; gap: 7px; transition: color .3s; }
   .status.running { color: var(--green); }
   .status.loaded  { color: var(--yellow); }
   .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
   .dot.blink { animation: blink 1s step-end infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
+  /* ── Notes ── */
+  .notes-wrap { padding: 0 20px 6px; }
+  .notes-input {
+    width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    color: var(--text); font-family: inherit; font-size: 12px; padding: 10px 14px;
+    outline: none; resize: none; transition: border-color .2s; line-height: 1.5;
+  }
+  .notes-input:focus { border-color: var(--blue); }
+  .notes-input::placeholder { color: var(--dim); }
+
   /* ── Buttons ── */
-  .btn-row { display: flex; gap: 10px; padding: 0 20px 6px; }
+  .btn-row { display: flex; gap: 10px; padding: 0 20px 4px; }
   .btn {
-    flex: 1; border: none; border-radius: 12px;
-    font-family: inherit; font-size: 13px; font-weight: 700;
-    letter-spacing: 2px; padding: 14px 10px; cursor: pointer;
+    flex: 1; border: none; border-radius: 12px; font-family: inherit; font-size: 13px;
+    font-weight: 700; letter-spacing: 2px; padding: 13px 10px; cursor: pointer;
     transition: all .15s; -webkit-tap-highlight-color: transparent;
   }
   .btn:active { transform: scale(.96); }
   .btn-start  { background: var(--green); color: #0a0a0f; }
-  .btn-stop   { background: var(--red);   color: #fff; }
-  .btn-cancel {
-    flex: 0 0 52px; background: var(--bg3);
-    color: var(--sub); border: 1px solid var(--border);
-  }
-  .btn:disabled { background: var(--bg3); color: var(--dim);
-                  border: 1px solid var(--border); pointer-events: none; }
+  .btn-stop   { background: var(--red); color: #fff; }
+  .btn-cancel { flex: 0 0 50px; background: var(--bg3); color: var(--sub); border: 1px solid var(--border); }
+  .btn:disabled { background: var(--bg3); color: var(--dim); border: 1px solid var(--border); pointer-events: none; }
 
-  .save-banner {
-    min-height: 18px; text-align: center;
-    font-size: 11px; color: var(--green); padding: 0 20px 4px;
-  }
+  .save-banner { min-height: 16px; text-align: center; font-size: 11px; color: var(--green); padding: 0 20px 4px; }
 
   /* ── History ── */
-  .hist-header {
-    display: flex; justify-content: space-between;
-    align-items: center; padding: 0 20px 6px;
-  }
+  .hist-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px 6px; }
   .hist-title { font-size: 10px; letter-spacing: 3px; color: var(--dim); }
   .hist-total { font-size: 10px; color: var(--green); }
+  .hist-list { flex: 1; overflow-y: auto; padding: 0 20px 20px; display: flex; flex-direction: column; gap: 8px; }
 
-  .hist-list {
-    flex: 1; overflow-y: auto;
-    padding: 0 20px 20px;
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .proj-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 14px; overflow: hidden; transition: border-color .2s;
-  }
+  .proj-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color .2s; }
   .proj-card.selected { border-color: var(--yellow); }
-  .proj-header {
-    display: flex; align-items: center;
-    padding: 12px 14px; cursor: pointer; gap: 10px;
-    -webkit-tap-highlight-color: transparent;
-  }
+  .proj-header { display: flex; align-items: center; padding: 12px 14px; cursor: pointer; gap: 10px; -webkit-tap-highlight-color: transparent; }
   .proj-chevron { font-size: 11px; color: var(--dim); transition: transform .2s; flex-shrink: 0; }
   .proj-chevron.open { transform: rotate(90deg); }
   .proj-icon { font-size: 15px; flex-shrink: 0; }
-  .proj-name {
-    flex: 1; font-size: 14px; font-weight: 700;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
+  .proj-name { flex: 1; font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .proj-total { font-size: 13px; font-weight: 700; color: var(--green); flex-shrink: 0; }
-  .proj-delete {
-    background: none; border: none; color: var(--dim);
-    font-size: 18px; cursor: pointer; padding: 0 4px;
-    -webkit-tap-highlight-color: transparent;
-  }
+  .proj-delete { background: none; border: none; color: var(--dim); font-size: 18px; cursor: pointer; padding: 0 4px; -webkit-tap-highlight-color: transparent; }
+
   .entries { display: none; border-top: 1px solid var(--border); }
   .entries.open { display: block; }
-  .entry-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 9px 14px 9px 38px;
-    border-bottom: 1px solid rgba(255,255,255,.04); gap: 8px;
-  }
+  .entry-row { padding: 10px 14px 10px 38px; border-bottom: 1px solid rgba(255,255,255,.04); }
   .entry-row:last-child { border-bottom: none; }
+  .entry-top { display: flex; align-items: center; gap: 8px; }
   .entry-date { font-size: 12px; color: var(--sub); flex: 1; }
-  .entry-dur  { font-size: 12px; color: var(--sub); flex-shrink: 0; }
-  .entry-del  {
-    background: none; border: none; color: var(--border);
-    font-size: 16px; cursor: pointer; padding: 0 2px;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .empty-msg {
-    text-align: center; color: var(--dim);
-    font-size: 12px; letter-spacing: 2px; padding: 30px 0;
-  }
+  .entry-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .entry-program { font-size: 10px; color: var(--blue); background: rgba(64,196,255,.1); padding: 2px 7px; border-radius: 10px; }
+  .entry-dur  { font-size: 12px; color: var(--sub); }
+  .entry-del  { background: none; border: none; color: var(--border); font-size: 16px; cursor: pointer; padding: 0 2px; -webkit-tap-highlight-color: transparent; }
+  .entry-note { font-size: 11px; color: var(--dim); margin-top: 5px; font-style: italic; line-height: 1.4; padding-left: 2px; }
+
+  .empty-msg { text-align: center; color: var(--dim); font-size: 12px; letter-spacing: 2px; padding: 30px 0; }
   .hist-list::-webkit-scrollbar { width: 4px; }
   .hist-list::-webkit-scrollbar-track { background: transparent; }
   .hist-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ── Rate input ── */
+  .rate-wrap { display: flex; align-items: center; gap: 8px; padding: 0 20px 4px; }
+  .rate-label { font-size: 10px; color: var(--dim); letter-spacing: 1px; white-space: nowrap; }
+  .rate-input {
+    width: 90px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    color: var(--green); font-family: inherit; font-size: 13px; font-weight: 700;
+    text-align: center; padding: 6px 8px; outline: none; transition: border-color .2s;
+  }
+  .rate-input:focus { border-color: var(--green); }
+  .rate-currency { font-size: 12px; color: var(--dim); }
+
+  /* ── Live price in timer ── */
+  .live-price {
+    font-size: 13px; font-weight: 700; color: var(--yellow);
+    margin-top: 6px; letter-spacing: 1px; min-height: 20px;
+  }
+
+  /* ── Price in history ── */
+  .proj-price { font-size: 11px; color: var(--yellow); flex-shrink: 0; margin-right: 4px; }
+  .entry-price { font-size: 11px; color: var(--yellow); }
 </style>
 </head>
 <body>
@@ -215,19 +211,48 @@
 
 <div class="name-wrap">
   <input class="name-input" id="nameInput" type="text" value="Môj projekt" maxlength="40">
-  <div class="name-hint">← názov projektu / programu</div>
+  <div class="name-hint">← názov projektu</div>
+</div>
+
+<div class="rate-wrap">
+  <span class="rate-label">HODINOVÁ SADZBA</span>
+  <input class="rate-input" id="rateInput" type="number" min="0" step="0.5" placeholder="0">
+  <span class="rate-currency">€ / hod</span>
+</div>
+
+<div class="sep"></div>
+
+<!-- ── Program tags ── -->
+<div class="tags-section">
+  <div class="tags-label">PROGRAM</div>
+  <div class="tags-wrap" id="tagsWrap">
+    <!-- generované JS -->
+  </div>
+</div>
+
+<div class="tag-input-wrap" id="tagInputWrap">
+  <input class="tag-input" id="tagInput" type="text" placeholder="Názov programu..." maxlength="30">
+  <button class="tag-input-confirm" onclick="confirmAddTag()">+</button>
+  <button class="tag-input-cancel" onclick="hideTagInput()">✕</button>
 </div>
 
 <div class="sep"></div>
 
 <div class="resume-banner" id="resumeBanner"></div>
 
+<!-- ── Timer ── -->
 <div class="timer-box" id="timerBox">
   <div class="timer-display" id="timerDisplay">00:00:00</div>
   <div class="status" id="statusEl">
     <span class="dot" id="statusDot"></span>
     <span id="statusText">NEČINNÝ</span>
   </div>
+  <div class="live-price" id="livePrice"></div>
+</div>
+
+<!-- ── Notes ── -->
+<div class="notes-wrap">
+  <textarea class="notes-input" id="notesInput" rows="2" placeholder="Poznámka — čo robíš? (voliteľné)"></textarea>
 </div>
 
 <div class="btn-row" id="btnRow">
@@ -242,42 +267,31 @@
   <div class="hist-title">HISTÓRIA PROJEKTOV</div>
   <div class="hist-total" id="grandTotal"></div>
 </div>
-
 <div class="hist-list" id="histList"></div>
 
 <script>
-// ── Config ───────────────────────────────────────────────────────────────────
 const API_URL = "https://script.google.com/macros/s/AKfycbx7ylu0wNl7mf6K-vz9CqmX_YI3YPxGCpBfQimh5ZC59oMvYpUp4VoPxa--L_ohMtzb/exec";
 
-// ── Storage helpers ───────────────────────────────────────────────────────────
-function localLoad() {
-  try { return JSON.parse(localStorage.getItem('tt_projects') || '[]'); } catch { return []; }
-}
-function localSave(p) {
-  localStorage.setItem('tt_projects', JSON.stringify(p));
-}
+// ── Default + uložené tagy ────────────────────────────────────────────────────
+const DEFAULT_TAGS = ["Unreal Engine","Photoshop","Unity","Cinema 4D","Twinmotion"];
 
-async function remoteLoad() {
-  const res  = await fetch(API_URL + "?action=load");
-  const data = await res.json();
-  return data.projects || [];
+function loadTags() {
+  try { return JSON.parse(localStorage.getItem('tt_tags') || 'null') || [...DEFAULT_TAGS]; }
+  catch { return [...DEFAULT_TAGS]; }
 }
+function saveTags() { localStorage.setItem('tt_tags', JSON.stringify(programTags)); }
 
-async function remoteSave(projects) {
-  await fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({ action: "save", projects }),
-  });
-}
-
-function setSyncBar(state, text) {
-  const bar = document.getElementById('syncBar');
-  bar.className = 'sync-bar ' + state;
-  document.getElementById('syncText').textContent = text;
-}
+// ── Storage ───────────────────────────────────────────────────────────────────
+function localLoad() { try { return JSON.parse(localStorage.getItem('tt_projects') || '[]'); } catch { return []; } }
+function localSave(p) { localStorage.setItem('tt_projects', JSON.stringify(p)); }
+async function remoteLoad() { const r = await fetch(API_URL + "?action=load"); const d = await r.json(); return d.projects || []; }
+async function remoteSave(p) { await fetch(API_URL, { method:"POST", body: JSON.stringify({ action:"save", projects:p }) }); }
+function setSyncBar(s, t) { document.getElementById('syncBar').className = 'sync-bar ' + s; document.getElementById('syncText').textContent = t; }
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let projects      = localLoad();
+let programTags   = loadTags();
+let selectedTag   = null;
 let isRunning     = false;
 let startTime     = null;
 let baseMs        = 0;
@@ -285,16 +299,14 @@ let activeProject = null;
 let tickId        = null;
 let openProjects  = new Set();
 
-// ── Init: load from Sheets ────────────────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
   setSyncBar('syncing', 'synchronizujem...');
+  renderTags();
   renderHistory();
   try {
     const remote = await remoteLoad();
-    if (remote.length > 0) {
-      projects = remote;
-      localSave(projects);
-    }
+    if (remote.length > 0) { projects = remote; localSave(projects); }
     setSyncBar('synced', 'synchronizované');
     renderHistory();
   } catch(e) {
@@ -302,21 +314,64 @@ async function init() {
   }
 }
 
+// ── Tags ──────────────────────────────────────────────────────────────────────
+function renderTags() {
+  const wrap = document.getElementById('tagsWrap');
+  wrap.innerHTML = '';
+  programTags.forEach(tag => {
+    const el = document.createElement('button');
+    el.className = 'tag' + (selectedTag === tag ? ' active' : '');
+    el.textContent = tag;
+    el.onclick = () => selectTag(tag);
+    wrap.appendChild(el);
+  });
+  // Tlačidlo + pridať
+  const addBtn = document.createElement('button');
+  addBtn.className = 'tag-add';
+  addBtn.textContent = '＋';
+  addBtn.onclick = showTagInput;
+  wrap.appendChild(addBtn);
+}
+
+function selectTag(tag) {
+  selectedTag = selectedTag === tag ? null : tag;
+  renderTags();
+}
+
+function showTagInput() {
+  document.getElementById('tagInputWrap').classList.add('visible');
+  document.getElementById('tagInput').focus();
+}
+function hideTagInput() {
+  document.getElementById('tagInputWrap').classList.remove('visible');
+  document.getElementById('tagInput').value = '';
+}
+function confirmAddTag() {
+  const val = document.getElementById('tagInput').value.trim();
+  if (val && !programTags.includes(val)) {
+    programTags.push(val);
+    saveTags();
+    selectedTag = val;
+    renderTags();
+  }
+  hideTagInput();
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('tagInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirmAddTag();
+    if (e.key === 'Escape') hideTagInput();
+  });
+});
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function fmsDur(ms) {
-  const t = Math.floor(ms / 1000);
-  const h = Math.floor(t / 3600);
-  const m = Math.floor((t % 3600) / 60);
-  const s = t % 60;
+  const t = Math.floor(ms/1000), h = Math.floor(t/3600), m = Math.floor((t%3600)/60), s = t%60;
   if (h > 0) return `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
   if (m > 0) return `${m}m ${String(s).padStart(2,'0')}s`;
   return `${s}s`;
 }
 function fmsTimer(ms) {
-  const t = Math.floor(ms / 1000);
-  const h = Math.floor(t / 3600);
-  const m = Math.floor((t % 3600) / 60);
-  const s = t % 60;
+  const t = Math.floor(ms/1000), h = Math.floor(t/3600), m = Math.floor((t%3600)/60), s = t%60;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 function todayStr() {
@@ -324,16 +379,22 @@ function todayStr() {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 function fmtDate(iso) {
-  const d = new Date(iso + 'T00:00:00');
+  const d = new Date(iso+'T00:00:00');
   const days = ['Nedeľa','Pondelok','Utorok','Streda','Štvrtok','Piatok','Sobota'];
   return `${days[d.getDay()]}  ${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
 }
 function projTotal(proj) { return proj.entries.reduce((a,e) => a + e.duration_ms, 0); }
+function calcPrice(ms, rate) { return ((ms / 3600000) * rate).toFixed(2); }
+function fmtPrice(ms, rate) { if (!rate || rate <= 0) return ''; return `${calcPrice(ms, rate)} €`; }
+function getRate() { return parseFloat(document.getElementById('rateInput').value) || 0; }
 
 // ── Timer ─────────────────────────────────────────────────────────────────────
 function tick() {
-  document.getElementById('timerDisplay').textContent =
-    fmsTimer(baseMs + (Date.now() - startTime));
+  const elapsed = baseMs + (Date.now() - startTime);
+  document.getElementById('timerDisplay').textContent = fmsTimer(elapsed);
+  const rate = activeProject?.rate_per_hour || getRate();
+  const price = fmtPrice(elapsed, rate);
+  document.getElementById('livePrice').textContent = price ? `💰 ${price}` : '';
   tickId = requestAnimationFrame(tick);
 }
 
@@ -345,6 +406,7 @@ function setUIRunning(color) {
   document.getElementById('statusText').textContent = 'SLEDUJE SA';
   document.getElementById('btnStart').disabled = true;
   document.getElementById('btnStop').disabled  = false;
+  document.getElementById('notesInput').disabled = false;
 }
 function setUIIdle(loaded) {
   document.getElementById('timerBox').className = 'timer-box' + (loaded ? ' loaded' : '');
@@ -358,8 +420,7 @@ function setUIIdle(loaded) {
 
 // ── Tracking ──────────────────────────────────────────────────────────────────
 function startTracking() {
-  isRunning = true;
-  startTime = Date.now();
+  isRunning = true; startTime = Date.now();
   document.getElementById('saveBanner').textContent = '';
   setUIRunning(activeProject ? 'loaded' : 'running');
   tick();
@@ -370,9 +431,15 @@ async function stopTracking() {
   isRunning = false;
   cancelAnimationFrame(tickId);
 
-  const newMs = Date.now() - startTime;
+  const newMs  = Date.now() - startTime;
+  const note   = document.getElementById('notesInput').value.trim();
+  const today  = todayStr();
+  const name   = document.getElementById('nameInput').value.trim() || 'Neznámy projekt';
+  const prog   = selectedTag || null;
+
   setUIIdle(false);
   document.getElementById('resumeBanner').textContent = '';
+  document.getElementById('livePrice').textContent = '';
   removeCancelBtn();
 
   if (newMs < 1000) {
@@ -380,46 +447,43 @@ async function stopTracking() {
     resetState(); return;
   }
 
-  const today = todayStr();
-  const name  = document.getElementById('nameInput').value.trim() || 'Neznámy projekt';
+  // Nový segment (každé spustenie = samostatný segment s programom + poznámkou)
+  const segment = { time: new Date().toLocaleTimeString('sk-SK',{hour:'2-digit',minute:'2-digit'}), duration_ms: newMs, program: prog, note: note || null };
 
   if (activeProject) {
     const proj  = projects.find(p => p.id === activeProject.id);
     if (proj) {
-      const entry = proj.entries.find(e => e.date === today);
-      if (entry) entry.duration_ms += newMs;
-      else proj.entries.push({ date: today, duration_ms: newMs });
-      document.getElementById('saveBanner').textContent =
-        `✓  Uložené — dnes +${fmsDur(newMs)} / celkom ${fmsDur(projTotal(proj))}`;
+      if (getRate() > 0) proj.rate_per_hour = getRate();
+      let entry = proj.entries.find(e => e.date === today);
+      if (!entry) { entry = { date: today, duration_ms: 0, segments: [] }; proj.entries.push(entry); }
+      if (!entry.segments) entry.segments = [];
+      entry.duration_ms += newMs;
+      entry.segments.push(segment);
+      const price = fmtPrice(projTotal(proj), proj.rate_per_hour);
+      document.getElementById('saveBanner').textContent = `✓  Uložené — dnes +${fmsDur(newMs)} / celkom ${fmsDur(projTotal(proj))}${price ? '  ·  ' + price : ''}`;
     }
   } else {
     let proj = projects.find(p => p.program.toLowerCase() === name.toLowerCase());
-    if (proj) {
-      const entry = proj.entries.find(e => e.date === today);
-      if (entry) entry.duration_ms += newMs;
-      else proj.entries.push({ date: today, duration_ms: newMs });
-    } else {
-      proj = { id: Date.now(), program: name, entries: [{ date: today, duration_ms: newMs }] };
-      projects.unshift(proj);
-    }
-    document.getElementById('saveBanner').textContent =
-      `✓  Uložené — dnes ${fmsDur(newMs)} / celkom ${fmsDur(projTotal(proj))}`;
+    if (!proj) { proj = { id: Date.now(), program: name, entries: [] }; projects.unshift(proj); }
+    if (getRate() > 0) proj.rate_per_hour = getRate();
+    let entry = proj.entries.find(e => e.date === today);
+    if (!entry) { entry = { date: today, duration_ms: 0, segments: [] }; proj.entries.push(entry); }
+    if (!entry.segments) entry.segments = [];
+    entry.duration_ms += newMs;
+    entry.segments.push(segment);
+    const price = fmtPrice(projTotal(proj), proj.rate_per_hour);
+    document.getElementById('saveBanner').textContent = `✓  Uložené — dnes ${fmsDur(newMs)} / celkom ${fmsDur(projTotal(proj))}${price ? '  ·  ' + price : ''}`;
   }
 
-  localSave(projects);
-  renderHistory();
-  resetState();
+  document.getElementById('notesInput').value = '';
+  localSave(projects); renderHistory(); resetState();
   await syncToSheets();
 }
 
 async function syncToSheets() {
   setSyncBar('syncing', 'ukladám...');
-  try {
-    await remoteSave(projects);
-    setSyncBar('synced', 'synchronizované');
-  } catch(e) {
-    setSyncBar('error', 'uložené lokálne (bez internetu)');
-  }
+  try { await remoteSave(projects); setSyncBar('synced', 'synchronizované'); }
+  catch(e) { setSyncBar('error', 'uložené lokálne (bez internetu)'); }
 }
 
 function resetState() {
@@ -431,18 +495,17 @@ function resetState() {
 // ── Load project ──────────────────────────────────────────────────────────────
 function loadProject(proj) {
   if (isRunning) { alert('Najprv zastav aktuálne sledovanie.'); return; }
-  const today   = todayStr();
-  const entry   = proj.entries.find(e => e.date === today);
-  baseMs        = entry ? entry.duration_ms : 0;
+  const today = todayStr();
+  const entry = proj.entries.find(e => e.date === today);
+  baseMs = entry ? entry.duration_ms : 0;
   activeProject = proj;
   document.getElementById('nameInput').value = proj.program;
+  document.getElementById('rateInput').value = proj.rate_per_hour || '';
   document.getElementById('timerDisplay').textContent = fmsTimer(baseMs);
   document.getElementById('saveBanner').textContent = '';
   const todayInfo = baseMs > 0 ? `  (dnes už ${fmsDur(baseMs)})` : '';
-  document.getElementById('resumeBanner').textContent =
-    `↺  Načítaný: "${proj.program}" — celkom ${fmsDur(projTotal(proj))}${todayInfo}`;
-  setUIIdle(true);
-  addCancelBtn();
+  document.getElementById('resumeBanner').textContent = `↺  Načítaný: "${proj.program}" — celkom ${fmsDur(projTotal(proj))}${todayInfo}`;
+  setUIIdle(true); addCancelBtn();
   document.querySelectorAll('.proj-card').forEach(c => c.classList.remove('selected'));
   document.getElementById('proj_' + proj.id)?.classList.add('selected');
 }
@@ -450,8 +513,7 @@ function loadProject(proj) {
 function addCancelBtn() {
   if (document.getElementById('btnCancel')) return;
   const btn = document.createElement('button');
-  btn.className = 'btn btn-cancel'; btn.id = 'btnCancel';
-  btn.textContent = '✕'; btn.onclick = cancelLoad;
+  btn.className = 'btn btn-cancel'; btn.id = 'btnCancel'; btn.textContent = '✕'; btn.onclick = cancelLoad;
   document.getElementById('btnRow').appendChild(btn);
 }
 function removeCancelBtn() { document.getElementById('btnCancel')?.remove(); }
@@ -469,16 +531,14 @@ async function deleteProject(id) {
   const proj = projects.find(p => p.id === id);
   if (!proj || !confirm(`Vymazať projekt "${proj.program}"?`)) return;
   projects = projects.filter(p => p.id !== id);
-  localSave(projects); renderHistory();
-  await syncToSheets();
+  localSave(projects); renderHistory(); await syncToSheets();
 }
 async function deleteEntry(projId, date) {
   const proj = projects.find(p => p.id === projId);
   if (!proj || !confirm(`Vymazať záznam z dňa ${fmtDate(date)}?`)) return;
   proj.entries = proj.entries.filter(e => e.date !== date);
   if (!proj.entries.length) projects = projects.filter(p => p.id !== projId);
-  localSave(projects); renderHistory();
-  await syncToSheets();
+  localSave(projects); renderHistory(); await syncToSheets();
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────
@@ -487,44 +547,85 @@ function renderHistory() {
   list.innerHTML = '';
   if (!projects.length) {
     list.innerHTML = '<div class="empty-msg">— žiadne projekty —</div>';
-    document.getElementById('grandTotal').textContent = '';
-    return;
+    document.getElementById('grandTotal').textContent = ''; return;
   }
   let grand = 0;
   projects.forEach(proj => {
-    const total  = projTotal(proj);
-    grand       += total;
+    const total = projTotal(proj); grand += total;
     const isOpen = openProjects.has(proj.id);
     const sorted = [...proj.entries].sort((a,b) => b.date.localeCompare(a.date));
 
     const card = document.createElement('div');
-    card.className = 'proj-card';
-    card.id = 'proj_' + proj.id;
+    card.className = 'proj-card'; card.id = 'proj_' + proj.id;
+
+    const entriesHtml = sorted.map(e => {
+      // Zoskup segmenty podľa programu
+      const segs = e.segments || [];
+      const grouped = {};
+      const order = [];
+      segs.forEach(s => {
+        const key = s.program || '—';
+        if (!grouped[key]) { grouped[key] = []; order.push(key); }
+        grouped[key].push(s);
+      });
+
+      const groupsHtml = order.map(progName => {
+        const group = grouped[progName];
+        const groupTotal = group.reduce((a, s) => a + s.duration_ms, 0);
+        const tasksHtml = group.map(s => `
+          <div class="entry-row" style="padding-left:66px;background:rgba(0,0,0,.2)">
+            <div class="entry-top">
+              <span class="entry-date" style="font-size:11px;color:var(--dim)">${s.time || ''}</span>
+              <span class="entry-dur" style="font-size:11px">${fmsDur(s.duration_ms)}</span>
+            </div>
+            ${s.note ? `<div class="entry-note">✎ ${s.note}</div>` : ''}
+          </div>
+        `).join('');
+
+        return `
+          <div class="entry-row" style="padding-left:52px;background:rgba(0,0,0,.12)">
+            <div class="entry-top">
+              ${progName !== '—'
+                ? `<span class="entry-program" style="font-size:11px">${progName}</span>`
+                : `<span class="entry-date" style="font-size:11px;color:var(--dim)">bez programu</span>`}
+              <span class="entry-dur" style="margin-left:auto">${fmsDur(groupTotal)}</span>
+            </div>
+          </div>
+          ${tasksHtml}
+        `;
+      }).join('');
+
+      return `
+        <div class="entry-row">
+          <div class="entry-top">
+            <span class="entry-date">${fmtDate(e.date)}</span>
+            <div class="entry-meta">
+              ${proj.rate_per_hour ? `<span class="entry-price">${fmtPrice(e.duration_ms, proj.rate_per_hour)}</span>` : ''}
+              <span class="entry-dur">${fmsDur(e.duration_ms)}</span>
+              <button class="entry-del" onclick="deleteEntry(${proj.id},'${e.date}')">×</button>
+            </div>
+          </div>
+        </div>
+        ${groupsHtml}
+      `;
+    }).join('');
+
     card.innerHTML = `
       <div class="proj-header">
         <span class="proj-chevron ${isOpen ? 'open' : ''}">▶</span>
         <span class="proj-icon">📁</span>
         <span class="proj-name">${proj.program}</span>
+        ${proj.rate_per_hour ? `<span class="proj-price">${fmtPrice(total, proj.rate_per_hour)}</span>` : ''}
         <span class="proj-total">${fmsDur(total)}</span>
         <button class="proj-delete" onclick="event.stopPropagation();deleteProject(${proj.id})">×</button>
       </div>
-      <div class="entries ${isOpen ? 'open' : ''}">
-        ${sorted.map(e => `
-          <div class="entry-row">
-            <span class="entry-date">${fmtDate(e.date)}</span>
-            <span class="entry-dur">${fmsDur(e.duration_ms)}</span>
-            <button class="entry-del" onclick="deleteEntry(${proj.id},'${e.date}')">×</button>
-          </div>
-        `).join('')}
-      </div>
+      <div class="entries ${isOpen ? 'open' : ''}">${entriesHtml}</div>
     `;
 
-    const ph = card.querySelector('.proj-header');
-    ph.addEventListener('click', (ev) => {
+    card.querySelector('.proj-header').addEventListener('click', ev => {
       if (ev.target.classList.contains('proj-delete')) return;
       if (ev.target.classList.contains('proj-chevron')) {
-        if (openProjects.has(proj.id)) openProjects.delete(proj.id);
-        else openProjects.add(proj.id);
+        openProjects.has(proj.id) ? openProjects.delete(proj.id) : openProjects.add(proj.id);
         renderHistory(); return;
       }
       loadProject(proj);
